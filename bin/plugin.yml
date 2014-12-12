@@ -1,0 +1,27 @@
+name: Code7
+version: 0.1 Alpha
+main: de.Code7.Main.Instructor
+author: SteffTek
+description: RPG-Based PvP-Survival
+commands:
+     clancreate:
+          description: Create a clan
+          usage: /<command> <clanname>
+     clandelete:
+          description: Delete a clan
+          usage: /<command> <clanname>
+     claninvite:
+          description: Invite a player to your clan
+          usage: /<command> <clanname> <playername>
+     clanaccept:
+          description: Accept a clan request
+          usage: /<command> <clanname>
+     clanleave:
+          description: Accept a clan request
+          usage: /<command> <clanname>
+     firstport:
+          description: Set firstspawn port
+          usage: /<command>
+     setrank:
+          description: Set Rank
+          usage: /<command> <playername> <Noob|Member|Admin>
