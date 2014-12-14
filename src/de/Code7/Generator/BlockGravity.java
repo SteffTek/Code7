@@ -7,6 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import de.Code7.Interface.OpMemberManager;
@@ -19,7 +20,8 @@ public class BlockGravity implements Listener{
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onPlace(BlockPlaceEvent e){
-		if(!Instructor.IVA.contains(e.getPlayer()) || OpMemberManager.getRank(e.getPlayer()) == "admin"){
+		if((!Instructor.IVA.contains(e.getPlayer()) && DistanceMath.DisToSpawn(e.getBlock().getLocation()) >= 500) || (OpMemberManager.getRank(e.getPlayer()) == "admin") ){
+		
 		if(e.isCancelled() == false){
 		mat.add(Material.DIRT);
 		mat.add(Material.GRASS);
@@ -45,4 +47,13 @@ public class BlockGravity implements Listener{
 			e.setCancelled(true);
 		}
 	}
+	@EventHandler(priority = EventPriority.LOWEST)
+	public void onBreak(BlockBreakEvent e){
+		if((!Instructor.IVA.contains(e.getPlayer()) && DistanceMath.DisToSpawn(e.getBlock().getLocation()) >= 500) || (OpMemberManager.getRank(e.getPlayer()) == "admin") ){
+			e.setCancelled(false);
+		} else {
+			e.setCancelled(true);
+		}
+	}
+	
 }

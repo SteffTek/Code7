@@ -15,7 +15,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.Code7.AdminMenu.*;
-import de.Code7.Clans.CreateClan;
+import de.Code7.Clans.*;
 import de.Code7.EntityManipulation.*;
 import de.Code7.Generator.*;
 import de.Code7.Home.*;
@@ -60,6 +60,7 @@ public class Instructor extends JavaPlugin implements Listener{
 		pm.registerEvents(new OpMemberManager(), this);
 		pm.registerEvents(new AntiCraft(), this);
 		pm.registerEvents(this, this);
+		pm.registerEvents(new ClanDamage(), this);
 		
 		getCommand("clancreate").setExecutor(new CreateClan());
 		getCommand("clandelete").setExecutor(new CreateClan());

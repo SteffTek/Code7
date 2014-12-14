@@ -13,7 +13,7 @@ public class AntiCraft implements Listener{
 	@EventHandler
     public void craftItem(PrepareItemCraftEvent e) {
         Material itemType = e.getRecipe().getResult().getType();
-        if(itemType==Material.TNT) {
+        if(itemType==Material.TNT || itemType==Material.EXPLOSIVE_MINECART || itemType==Material.ENDER_CHEST) {
             e.getInventory().setResult(new ItemStack(Material.AIR));
             for(HumanEntity he:e.getViewers()) {
                 if(he instanceof Player) {

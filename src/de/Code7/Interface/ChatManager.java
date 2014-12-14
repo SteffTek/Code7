@@ -1,6 +1,7 @@
 package de.Code7.Interface;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,6 +17,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+import de.Code7.Main.PlayerManager;
+
 
 public class ChatManager implements Listener{
 
@@ -29,19 +32,31 @@ public class ChatManager implements Listener{
 		for(String key : clancheck.getConfigurationSection("Clans.").getKeys(false)){
 			
 
-			if(clancheck.contains("Clans." + key)){
-				String clanpath = "Clans." + key;
+			//if(clancheck.contains("Clans." + key)){
+				/*String clanpath = "Clans." + key;
 				if(clancheck.getString(clanpath + ".Owner").equals(p.getPlayer().getUniqueId().toString())){
 					p.setDisplayName(ChatColor.RED + "[" + key + "] " + ChatColor.GREEN + p.getName());
 				} else 
-				if(clancheck.contains("Clans." + key + "." + p.getPlayer().getUniqueId().toString())){
-				if(clancheck.getString(clanpath + "." + p.getPlayer().getUniqueId().toString()).equals("on")){
+				if(clancheck.getString(PlayerManager.getUUID(p.getName()) + "") == key){//clancheck.contains("Clans." + key + "." + p.getPlayer().getUniqueId().toString())){
 					p.setDisplayName(ChatColor.RED + "[" + key + "] " + ChatColor.GREEN + p.getName());
+				*/
+				
+				if(clancheck.get("Clans." + getClan(p)) == null){
+					clancheck.set(PlayerManager.getUUID(p.getName()) + "", null);
+					
+					try {
+						clancheck.save(clans);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				}
+				
+				if(key.equals(getClan(p))){
+					p.setDisplayName(ChatColor.RED + "[" + key + "] " + ChatColor.GREEN + p.getName());
 				} else {
 					p.setDisplayName(p.getName());
 				}
-			}
+			//}
 		}
 		
 		if(OpMemberManager.getRank(p) == "member"){
@@ -50,6 +65,19 @@ public class ChatManager implements Listener{
 			e.setFormat(ChatColor.DARK_RED + "[" + ChatColor.RED + p.getDisplayName() + ChatColor.DARK_RED + "]" + " " + ChatColor.AQUA + e.getMessage());
 		} else if(OpMemberManager.getRank(p) == "noob"){
 			e.setFormat(ChatColor.BLUE + "[" + ChatColor.YELLOW + "Noobie: " + p.getDisplayName() + ChatColor.BLUE + "]" + " " + ChatColor.MAGIC + e.getMessage());
+		}
+	}
+	
+	public static String getClan(Player p){
+		File clans = new File("plugins/Code7/Clan", "Clans.yml");
+		FileConfiguration clancheck = YamlConfiguration.loadConfiguration(clans);
+		
+		String clan = clancheck.getString(PlayerManager.getUUID(p.getName()) + "");
+		
+		if(clan != ""){
+			return clan;
+		} else {
+			return null;
 		}
 	}
 	
